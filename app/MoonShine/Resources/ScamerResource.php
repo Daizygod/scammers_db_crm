@@ -43,7 +43,8 @@ class ScamerResource extends ModelResource
                 fn($item) => "$item->lastname $item->firstname $item->secondname")
                 ->sortable(),
             Textarea::make('Описание', 'description',
-                fn($item) => strlen($item->description) > 40 ? mb_substr($item->description, 0, 40) . "..." : $item->description),
+                fn($item) => !is_null($item->description) ? strlen($item->description) > 40 ? mb_substr($item->description, 0, 40) . "..." : $item->description : "")
+                ->nullable(),
             HasMany::make('Фото', 'scamer_photos', resource: new ScamerPhotoResource()),
         ];
     }
